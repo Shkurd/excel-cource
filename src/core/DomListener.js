@@ -17,12 +17,19 @@ export class DomListener {
             `Method ${method} is not implemeted in ${this.name || ''} Component`
         )
       }
+      this[method] = this[method].bind(this)
       // тоже, что и addEventListener
-      this.$root.on(listener, this[method].bind(this))
+      this.$root.on(listener, this[method])
     })
   }
 
-  removeDOMlisteners() {}
+  removeDOMlisteners() {
+    this.listeners.forEach(listener => {
+      const method = getMethodName(listener)
+      // тоже, что и removeEventListener
+      this.$root.off(listener, this[method])
+    })
+  }
 }
 
 // Input => onInput
