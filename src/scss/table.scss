@@ -20,6 +20,21 @@
       border: 1px solid $border-color;
       border-top: none;
       background: #f8f9fa;
+      position: relative;
+
+      &-resize{
+        position: absolute;
+        bottom: 0;
+        height: 4px;
+        width: 100%;
+        background: $primary-color;
+        opacity: 0;
+
+        &:hover{
+          opacity: 1;
+          cursor: row-resize;
+        }
+      }
     }
 
     &-data {
@@ -36,6 +51,22 @@
         border: 1px solid $border-color;
         border-top: none;
         border-left: none;
+        position: relative;
+
+        &-resize{
+          position: absolute;
+          top: 0;
+          right: 0;
+          height: 100%;
+          width: 2px;
+          background: $primary-color;
+          opacity: 0;
+
+          &:hover{
+            opacity: 1;
+            cursor: col-resize;
+          }
+        }
 
       }
 
@@ -57,7 +88,7 @@
   
   & .selected {
     border: 0;
-    outline: 2px solid #3c74FF;
+    outline: 2px solid $primary-color;
     z-index: 2;
   }
 }

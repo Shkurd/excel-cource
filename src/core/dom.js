@@ -37,8 +37,16 @@ class Dom {
     }
     return this
   }
-}
 
+  closest(celector) {
+    return $(this.$el.closest(celector))
+  }
+
+  getCoordinates() {
+    // возвращает размер элемента и его позицию относительно viewport
+    return this.$el.getBoundingClientRect()
+  }
+}
 
 export function $(selector) {
   return new Dom(selector)
