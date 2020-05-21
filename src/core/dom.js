@@ -51,6 +51,17 @@ class Dom {
     return this.$el.querySelectorAll(selector)
   }
 
+  css(styles = {}) {
+    // for (const key in styles) {
+    //   if (styles.hasOwnProperty) {
+    //    ...
+    //   }
+    // }
+    Object.keys(styles).forEach(key => {
+      this.$el.style[key] = styles[key]
+    })
+  }
+
   get data() {
     return this.$el.dataset
   }

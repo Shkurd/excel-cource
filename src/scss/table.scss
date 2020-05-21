@@ -29,9 +29,10 @@
         width: 100%;
         background: $primary-color;
         opacity: 0;
+        z-index: 10;
 
         &:hover{
-          opacity: 1;
+          opacity: 1!important;
           cursor: row-resize;
         }
       }
@@ -52,10 +53,6 @@
         border-top: none;
         border-left: none;
         position: relative;
-        
-        min-height: 24px;
-        max-height: 24px;
-        
 
         &-resize{
           position: absolute;
@@ -65,9 +62,10 @@
           width: 2px;
           background: $primary-color;
           opacity: 0;
+          z-index: 10;
 
           &:hover{
-            opacity: 1;
+            opacity: 1!important;
             cursor: col-resize;
           }
         }
