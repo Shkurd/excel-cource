@@ -52,6 +52,10 @@
         border-top: none;
         border-left: none;
         position: relative;
+        
+        min-height: 24px;
+        max-height: 24px;
+        
 
         &-resize{
           position: absolute;

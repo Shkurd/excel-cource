@@ -38,13 +38,21 @@ class Dom {
     return this
   }
 
-  closest(celector) {
-    return $(this.$el.closest(celector))
+  closest(selector) {
+    return $(this.$el.closest(selector))
   }
 
   getCoordinates() {
     // возвращает размер элемента и его позицию относительно viewport
     return this.$el.getBoundingClientRect()
+  }
+
+  findAll(selector) {
+    return this.$el.querySelectorAll(selector)
+  }
+
+  get data() {
+    return this.$el.dataset
   }
 }
 

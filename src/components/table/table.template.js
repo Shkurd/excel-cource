@@ -3,15 +3,17 @@ const CODES = {
   Z: 90
 }
 
-function toCell() {
+function toCell(_, colIndex) {
   return `
-    <div class="excel__table-row-data-cell" contenteditable> </div>
+    <div class="excel__table-row-data-cell"
+     contenteditable data-col="${colIndex}"> </div>
   `
 }
 
-function toColumn(col) {
+function toColumn(col, index) {
   return `
-    <div class="excel__table-row-data-column" data-type="resizeble">
+    <div class="excel__table-row-data-column" data-type="resizeble"
+     data-col="${index}">
       ${col}
       <div class="excel__table-row-data-column-resize" data-resize="col">
       </div>  
@@ -24,7 +26,7 @@ function createRow(index, content) {
     ? '<div class="excel__table-row-info-resize" data-resize="row"></div>'
     : ''
   return `
-    <div class="excel__table-row">
+    <div class="excel__table-row" data-type="resizeble">
       <div class="excel__table-row-info">
         ${index ? index : ''}
         ${resizer}

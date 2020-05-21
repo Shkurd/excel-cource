@@ -25,11 +25,19 @@ export class Table extends ExcelComponent {
       // const $parent = $resizer.$el.closest('.excel__table-row-data-column')
       const $parent = $resizer.closest('[data-type="resizeble"]')
       const coords = $parent.getCoordinates()
-      document.onmousemove = e => {
-        const delta = e.pageX - coords.right
-        $parent.$el.style.width = (coords.width + delta) + 'px'
-      }
 
+      const cells = this.$root.findAll(`[data-col="${$parent.data.col}"]`)
+
+      document.onmousemove = e => {
+        console.log('onmousemove')
+        const deltaCol = e.pageX - coords.right
+        const deltaRow = e.pageY - coords.bottom
+        const valueWidth = coords.width + deltaCol
+        $parent.$el.style.height = (coords.height + deltaRow) + 'px'
+        cells.forEach(el => {
+          el.style.width = valueWidth + 'px'
+        })
+      }
       document.onmouseup = () => {
         document.onmousemove = null
       }
@@ -52,3 +60,9 @@ export class Table extends ExcelComponent {
   }
   */
 }
+
+// 271 msScripting
+// 2947 msRendering
+
+// 234 msScripting
+// 3624 msRendering
