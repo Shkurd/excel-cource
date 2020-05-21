@@ -7,7 +7,7 @@ export class Table extends ExcelComponent {
   static className = 'excel__table'
   constructor($root) {
     super($root, {
-      listeners: ['mousedown', 'mouseup']
+      listeners: ['mousedown']
     })
   }
 
