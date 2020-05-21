@@ -23,7 +23,7 @@ export class Excel {
 
   render() {
     this.$el.append(this.getRoot())
-    // После формирования дома навешиваем слушателей событий
+    // После формирования дома навешиваем слушателей событий на компоненты
     this.components.forEach(component => component.init());
   }
 }
