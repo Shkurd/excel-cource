@@ -19,7 +19,7 @@ function toCell(rowIndex) {
       data-col="${colIndex}"
       data-row="${rowIndex}"
       data-type="cell"
-      data-id="${colIndex}:${rowIndex}">
+      data-id="${rowIndex}:${colIndex}">
     </div>
   `
   }

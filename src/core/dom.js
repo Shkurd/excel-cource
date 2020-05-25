@@ -63,6 +63,18 @@ class Dom {
     return this.$el.classList.remove(className)
   }
 
+  id(parse) {
+    if (parse) {
+      const parsed = this.id().split(':')
+      return {
+        row: +parsed[0],
+        col: +parsed[1]
+      }
+    } else {
+      return this.data.id
+    }
+  }
+
   css(styles = {}) {
     // for (const key in styles) {
     //   if (styles.hasOwnProperty) {
