@@ -2,12 +2,27 @@ const CODES = {
   A: 65,
   Z: 90
 }
-
-function toCell(_, colIndex) {
+/*
+function toCell(rowIndex, colIndex) {
   return `
     <div class="excel__table-row-data-cell"
-     contenteditable data-col="${colIndex}"> </div>
+     contenteditable data-col="${colIndex}" data-row="${rowIndex}"> </div>
   `
+}
+*/
+
+function toCell(rowIndex) {
+  return function(_, colIndex) {
+    return `
+    <div class="excel__table-row-data-cell"
+      contenteditable
+      data-col="${colIndex}"
+      data-row="${rowIndex}"
+      data-type="cell"
+      data-id="${rowIndex}:${colIndex}">
+    </div>
+  `
+  }
 }
 
 function toColumn(col, index) {
@@ -53,13 +68,14 @@ export function createTable(rowsCount = 10) {
   rows.push(createRow(null, cols))
 
   // формируем последующие строки 1,2,3... + ячейки таблицы для них
-  for (let i = 0; i < rowsCount; i++) {
+  for (let row = 0; row < rowsCount; row++) {
     const cells = new Array(colsCount)
         .fill('')
-        .map(toCell)
+        // .map((_, col)=>toCell(row, col))
+        .map(toCell(row))
         .join('')
 
-    rows.push(createRow(i + 1, cells))
+    rows.push(createRow(row + 1, cells))
   }
 
   return rows.join('')
