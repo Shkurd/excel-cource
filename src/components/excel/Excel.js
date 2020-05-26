@@ -31,5 +31,9 @@ export class Excel {
     // После формирования дома навешиваем слушателей событий на компоненты
     this.components.forEach(component => component.init());
   }
+
+  destroy() {
+    this.components.forEach(component => component.destroy());
+  }
 }
 
