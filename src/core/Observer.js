@@ -11,7 +11,7 @@ export class Observer {
     if (!Array.isArray(this.listeners[eventName])) {
       return false
     }
-    this.listeners[eventName].array.forEach(listener => {
+    this.listeners[eventName].forEach(listener => {
       listener(...args)
     });
     return true
