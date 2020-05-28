@@ -7,10 +7,13 @@ import {Formula} from './components/formula/formula'
 import {Table} from './components/table/Table'
 import {CreateStore} from '@core/CreateStore'
 import {rootReducer} from '@/redux/rootReducer'
+import {storage} from './core/utils'
 
 // создаем единый стор
-const store = new CreateStore(rootReducer, {
-  colState: {}
+const store = new CreateStore(rootReducer, storage('excel-state'))
+
+store.subscribe(state => {
+  storage('excel-state', state)
 })
 
 const excel = new Excel('#app', {

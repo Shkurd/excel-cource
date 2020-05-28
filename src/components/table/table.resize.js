@@ -17,7 +17,6 @@ export function resizeHandler($root, e) {
     })
 
     document.onmousemove = e => {
-      console.log('onmousemove')
       if (type === 'col') {
         const deltaCol = e.pageX - coords.right
         value = coords.width + deltaCol
