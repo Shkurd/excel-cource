@@ -14,7 +14,6 @@ import {initialState} from './redux/initialState'
 const store = new CreateStore(rootReducer, initialState)
 
 store.subscribe(state => {
-  console.log('App_state: ', state)
   storage('excel-state', state)
 })
 

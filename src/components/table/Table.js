@@ -28,22 +28,17 @@ export class Table extends ExcelComponent {
     // не перезатираем init родительского класса тут, для этого используем super
     super.init()
 
-    // console.log($cells.dataset('[data-id]'))
     const $cell = this.$root.find('[data-id="0:0"]')
-
     this.selectCell($cell)
 
     this.$on('Formula:input', text => {
       this.selection.current.text(text)
+      this.updateTextInStore(text)
     })
 
     this.$on('Formula:done-enter', () => {
       this.selection.current.focus()
     })
-
-    // this.$subscribe(state => {
-    //   console.log('TableState', state)
-    // })
   }
 
   selectCell($cell) {
@@ -94,7 +89,14 @@ export class Table extends ExcelComponent {
     }
   }
 
+  updateTextInStore(value) {
+    this.$dispatch(actions.changeText({
+      id: this.selection.current.id(),
+      value
+    }))
+  }
+
   onInput(e) {
-    this.$emit('table:input', $(e.target))
+    this.updateTextInStore($(event.target).text())
   }
 }

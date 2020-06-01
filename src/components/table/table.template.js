@@ -16,15 +16,18 @@ function getHeight(state, index) {
 
 function toCell(state, rowIndex) {
   return function(_, colIndex) {
-    const width = getWidth(state, colIndex)
+    const id = `${rowIndex}:${colIndex}`
+    const width = getWidth(state.colState, colIndex)
+    const data = state.dataState[id]
     return `
     <div class="excel__table-row-data-cell"
       contenteditable
       data-col="${colIndex}"
       data-row="${rowIndex}"
       data-type="cell"
-      data-id="${rowIndex}:${colIndex}"
+      data-id="${id}"
       style="width:${width}">
+      ${data || ''}
     </div>
   `
   }
@@ -101,7 +104,7 @@ export function createTable(rowsCount = 10, state = {}) {
     const cells = new Array(colsCount)
         .fill('')
         // .map((_, col)=>toCell(row, col))
-        .map(toCell(state.colState, row))
+        .map(toCell(state, row))
         .join('')
 
     rows.push(createRow(row + 1, cells, state.rowState))

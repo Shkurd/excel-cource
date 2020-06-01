@@ -1,5 +1,6 @@
 import {$} from '@core/dom'
 import {Observer} from '@core/Observer'
+import {StoreSubscriber} from '@core/StoreSubcscriber'
 
 export class Excel {
   constructor(selector, options) {
@@ -7,6 +8,7 @@ export class Excel {
     this.components = options.components || []
     this.store = options.store
     this.observer = new Observer
+    this.subscriber = new StoreSubscriber(this.store)
   }
 
   getRoot() {
@@ -31,10 +33,12 @@ export class Excel {
   render() {
     this.$el.append(this.getRoot())
     // После формирования дома навешиваем слушателей событий на компоненты
+    this.subscriber.subscribeComponents(this.components)
     this.components.forEach(component => component.init());
   }
 
   destroy() {
+    this.subscriber.unsubscribeFromStore()
     this.components.forEach(component => component.destroy());
   }
 }

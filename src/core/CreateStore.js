@@ -31,7 +31,8 @@ export class CreateStore {
   }
 
   getState() {
-    return this.state
+    // Для избежания мутации объекта можно воспользоваться такой записью:
+    return JSON.parse(JSON.stringify(this.state))
   }
 }
 
