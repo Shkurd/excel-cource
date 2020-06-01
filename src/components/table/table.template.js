@@ -4,14 +4,19 @@ const CODES = {
 }
 
 const DEFAULT_WIDTH = 120
+const DEFAULT_HEIGHT = 24
 
 function getWidth(state, index) {
   return (state[index] || DEFAULT_WIDTH) + 'px'
 }
 
+function getHeight(state, index) {
+  return (state[index] || DEFAULT_HEIGHT) + 'px'
+}
+
 function toCell(state, rowIndex) {
   return function(_, colIndex) {
-    const width = getWidth(state.colState, colIndex)
+    const width = getWidth(state, colIndex)
     return `
     <div class="excel__table-row-data-cell"
       contenteditable
@@ -38,12 +43,17 @@ function toColumn({col, index, width}) {
   `
 }
 
-function createRow(index, content) {
+function createRow(index, content, state) {
   const resizer = index
     ? '<div class="excel__table-row-info-resize" data-resize="row"></div>'
     : ''
+  const height = getHeight(state, index)
   return `
-    <div class="excel__table-row" data-type="resizeble">
+    <div class="excel__table-row"
+     data-type="resizeble"
+      data-row="${index}"
+      style="height:${height}"
+      >
       <div class="excel__table-row-info">
         ${index ? index : ''}
         ${resizer}
@@ -65,6 +75,14 @@ function withWidthFrom(state) {
   }
 }
 
+// function withHeightFrom(state) {
+//   return function(row, index) {
+//     return {
+//       row, index, height: getHeight(state.colState, index)
+//     }
+//   }
+// }
+
 export function createTable(rowsCount = 10, state = {}) {
   const colsCount = CODES.Z - CODES.A + 1
   const rows = []
@@ -76,17 +94,17 @@ export function createTable(rowsCount = 10, state = {}) {
       .map(toColumn)
       .join('')
 
-  rows.push(createRow(null, cols))
+  rows.push(createRow(null, cols, {}))
 
   // формируем последующие строки 1,2,3... + ячейки таблицы для них
   for (let row = 0; row < rowsCount; row++) {
     const cells = new Array(colsCount)
         .fill('')
         // .map((_, col)=>toCell(row, col))
-        .map(toCell(state, row))
+        .map(toCell(state.colState, row))
         .join('')
 
-    rows.push(createRow(row + 1, cells))
+    rows.push(createRow(row + 1, cells, state.rowState))
   }
 
   return rows.join('')
