@@ -1,3 +1,7 @@
+import {toInlineStyles} from '@core/utils'
+import {defaultStyles} from '@/constants'
+import {parse} from '@/core/parse'
+
 const CODES = {
   A: 65,
   Z: 90
@@ -19,6 +23,10 @@ function toCell(state, rowIndex) {
     const id = `${rowIndex}:${colIndex}`
     const width = getWidth(state.colState, colIndex)
     const data = state.dataState[id]
+    const styles = toInlineStyles({
+      ...defaultStyles,
+      ...state.stylesState[id]
+    })
     return `
     <div class="excel__table-row-data-cell"
       contenteditable
@@ -26,8 +34,9 @@ function toCell(state, rowIndex) {
       data-row="${rowIndex}"
       data-type="cell"
       data-id="${id}"
-      style="width:${width}">
-      ${data || ''}
+      data-value="${data || ''}"
+      style="${styles}; width: ${width}">
+      ${parse(data) || ''}
     </div>
   `
   }
@@ -77,14 +86,6 @@ function withWidthFrom(state) {
     }
   }
 }
-
-// function withHeightFrom(state) {
-//   return function(row, index) {
-//     return {
-//       row, index, height: getHeight(state.colState, index)
-//     }
-//   }
-// }
 
 export function createTable(rowsCount = 10, state = {}) {
   const colsCount = CODES.Z - CODES.A + 1

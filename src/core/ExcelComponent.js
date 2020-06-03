@@ -24,6 +24,8 @@ export class ExcelComponent extends DomListener {
   // Тут паттерн фасад - взамиодействие через метод $emit с emit observer-a
   // $emit - метод уведомляет слушателей про события "eventName"
   $emit(eventName, ...args) {
+    console.log(eventName)
+    console.log(...args)
     this.observer.emit(eventName, ...args)
   }
 
