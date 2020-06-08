@@ -23,9 +23,8 @@ export class ExcelComponent extends DomListener {
   // метод с "$" это мето д нашего фреймворка, а без "$" просто одноименный
   // Тут паттерн фасад - взамиодействие через метод $emit с emit observer-a
   // $emit - метод уведомляет слушателей про события "eventName"
+
   $emit(eventName, ...args) {
-    console.log(eventName)
-    console.log(...args)
     this.observer.emit(eventName, ...args)
   }
 
@@ -62,6 +61,6 @@ export class ExcelComponent extends DomListener {
   destroy() {
     this.removeDOMlisteners()
     this.unsubscribers.forEach(unsub => unsub())
-    this.storeSub.unsubscribe()
+    // this.storeSub.unsubscribe()
   }
 }

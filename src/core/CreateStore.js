@@ -1,10 +1,10 @@
 import {rootReducer} from '@/redux/rootReducer'
 
 export class CreateStore {
-  constructor(rootReducer, nitialState = {}) {
+  constructor(rootReducer, initialState = {}) {
     this.rootReducer = rootReducer
-    this.nitialState = nitialState
-    this.state = rootReducer({...this.nitialState}, {type: '__INIT__'})
+    this.initialState = initialState
+    this.state = rootReducer({...this.initialState}, {type: '__INIT__'})
     this.listeners = []
   }
 
@@ -18,7 +18,11 @@ export class CreateStore {
     // }
     return {
       unsubscribe() {
-        this.listeners = this.listeners.filter(listener => listener(this.state))
+        if (this.listeners) {// мое условие, иначе может может быть ошибка
+          this.listeners = this.listeners.filter(listener => listener !== fn)
+        }
+        // eslint-disable-next-line max-len
+        // this.listeners = this.listeners.filter(listener => listener(this.state))
       }
     }
   }
@@ -35,7 +39,6 @@ export class CreateStore {
     return JSON.parse(JSON.stringify(this.state))
   }
 }
-
 
 // // возвращает объект с методами редакс (построен на паттерне observer)
 // export function createStore(rootReduser, initialState = {}) {
