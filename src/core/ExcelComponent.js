@@ -25,7 +25,6 @@ export class ExcelComponent extends DomListener {
   // $emit - метод уведомляет слушателей про события "eventName"
 
   $emit(eventName, ...args) {
-    console.log('eventName: ', eventName)
     this.observer.emit(eventName, ...args)
   }
 

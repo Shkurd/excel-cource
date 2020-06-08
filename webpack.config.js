@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
@@ -57,7 +58,9 @@ module.exports = {
           }
         }
     ),
-
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+    }),
     new CopyPlugin([{
       from: path.resolve(__dirname, 'src/favicon.ico'),
       to: path.resolve(__dirname, 'dist')

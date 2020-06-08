@@ -21,6 +21,11 @@ export class StoreSubscriber {
         }
       })
       this.prevState = this.store.getState()
+      // Благодаря вэбпак модулю webpack.DefinePlugin можем добавлять условия
+      // в зависимости от режима сборки - development или production
+      if (process.env.NODE_ENV === 'development') {
+        window['redux'] = this.prevState
+      }
     })
   }
 

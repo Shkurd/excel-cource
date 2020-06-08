@@ -16,7 +16,7 @@ export function range(start, end) {
       .map((_, index) => start + index)
 }
 
-export function storage(key, data) {
+export function storage(key, data = null) {
   if (!data) {
     return JSON.parse(localStorage.getItem(key))
   }
@@ -51,4 +51,12 @@ export function debounce(fn, wait) {
     clearTimeout(timeout)
     timeout = setTimeout(later, wait)
   }
+}
+
+export function clone(obj) {
+  return JSON.parse(JSON.stringify(obj))
+}
+
+export function preventDefault(event) {
+  event.preventDefault()
 }
