@@ -10,6 +10,11 @@ const isDev = !isProd;
 
 const filename = (ext) => isDev ? `bundle.${ext}` : `bundle[hash].${ext}`
 const jsLoaders = () => {
+  const loaders = ['babel-loader']
+  // выносим настройки бабеля в отдельный файл - babel.config,js
+  // для реализации работы jesta с конструкциями импортов "import"
+  // иначе можно использовать код ниже и работать без внешнего файла конфига
+  /*
   const loaders = [
     {
       loader: 'babel-loader',
@@ -19,6 +24,7 @@ const jsLoaders = () => {
       },
     }
   ]
+  */
 
   if (isDev) {
     loaders.push('eslint-loader')

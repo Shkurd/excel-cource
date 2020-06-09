@@ -1,10 +1,10 @@
-import {rootReducer} from '@/redux/rootReducer'
+// import {rootReducer} from '@/redux/rootReducer'
 
 export class CreateStore {
   constructor(rootReducer, initialState = {}) {
     this.rootReducer = rootReducer
     this.initialState = initialState
-    this.state = rootReducer({...this.initialState}, {type: '__INIT__'})
+    this.state = this.rootReducer({...this.initialState}, {type: '__INIT__'})
     this.listeners = []
   }
 
@@ -17,12 +17,8 @@ export class CreateStore {
     //   listeners.filter(listener => listener !== fn)
     // }
     return {
-      unsubscribe() {
-        if (this.listeners) {// мое условие, иначе может может быть ошибка
-          this.listeners = this.listeners.filter(listener => listener !== fn)
-        }
-        // eslint-disable-next-line max-len
-        // this.listeners = this.listeners.filter(listener => listener(this.state))
+      unsubscribe: () => {
+        this.listeners = this.listeners.filter(listener => listener !== fn)
       }
     }
   }
@@ -30,7 +26,7 @@ export class CreateStore {
   // dispatch() - это и есть по сути вызов экшена.
   // Должен содержать тип экшена (action) в виде строки! Пример: {type:'INIT'}
   dispatch(action) {
-    this.state = rootReducer(this.state, action)
+    this.state = this.rootReducer(this.state, action)
     this.listeners.forEach(listener => listener(this.state))
   }
 
